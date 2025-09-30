@@ -95,11 +95,33 @@ class ProgramSelectionAPITester:
         )
         
         if success and isinstance(response, list):
+            # Expected new program names
+            expected_names = [
+                "CSV-to-blacklist",
+                "csv-to-enduser", 
+                "csv-to-functional",
+                "csv-to-newenduser",
+                "csv-to-newfunctional",
+                "csv-to-silentuser",
+                "csv-to-swapalias",
+                "csv-to-antispoofing",
+                "csv-to-globalalias",
+                "csv-to-autoblockattachment",
+                "csv-to-block-by-body-content",
+                "csv-to-blocklist",
+                "Archive tools",
+                "autoblockHeader",
+                "autorelay"
+            ]
+            
             # Validate program structure
             for i, program in enumerate(response):
-                expected_name = f"Prg{i+1}"
-                if program.get('name') != expected_name:
-                    print(f"   ⚠️  Program {i+1} name mismatch: expected {expected_name}, got {program.get('name')}")
+                if i < len(expected_names):
+                    expected_name = expected_names[i]
+                    if program.get('name') != expected_name:
+                        print(f"   ⚠️  Program {i+1} name mismatch: expected {expected_name}, got {program.get('name')}")
+                    else:
+                        print(f"   ✅ Program {i+1} name correct: {program.get('name')}")
                 
                 expected_desc = "This is a testing program and soon it will be a program to execute to complete a specific functionality. To be determined soon...."
                 if program.get('description') != expected_desc:

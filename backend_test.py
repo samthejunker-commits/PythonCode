@@ -175,7 +175,7 @@ class ProgramSelectionAPITester:
         program_id = self.program_ids[0]
         selection_data = {
             "program_id": program_id,
-            "program_name": "Prg1",
+            "program_name": "CSV-to-blacklist",  # Updated to use new program name
             "user_session": f"test_session_{datetime.now().strftime('%H%M%S')}"
         }
         

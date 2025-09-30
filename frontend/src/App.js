@@ -104,7 +104,7 @@ const ProgramSelection = () => {
               'from-red-400 to-pink-500'
             ];
             
-            const programIndex = parseInt(program.name.replace('Prg', '')) - 1;
+            const programIndex = programs.findIndex(p => p.id === program.id);
             const gradientClass = gradients[programIndex % gradients.length];
             
             return (

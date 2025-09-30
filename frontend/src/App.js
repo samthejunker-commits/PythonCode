@@ -222,7 +222,10 @@ const ProgramDetails = () => {
     );
   }
 
-  const programIndex = parseInt(program.name.replace('Prg', '')) - 1;
+  // Generate a consistent index based on program name hash for gradient assignment
+  const programIndex = Math.abs(program.name.split('').reduce((hash, char) => {
+    return ((hash << 5) - hash) + char.charCodeAt(0);
+  }, 0)) % 15;
   const gradients = [
     'from-emerald-400 to-teal-500',
     'from-teal-400 to-cyan-500', 

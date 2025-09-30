@@ -49,19 +49,38 @@ class ProgramSelectionCreate(BaseModel):
 # Initialize programs data
 async def initialize_programs():
     """Initialize the 15 programs in the database"""
-    existing_count = await db.programs.count_documents({})
-    if existing_count == 0:
-        programs_data = []
-        for i in range(1, 16):
-            program = Program(
-                name=f"Prg{i}",
-                title=f"Program {i}",
-                description="This is a testing program and soon it will be a program to execute to complete a specific functionality. To be determined soon...."
-            )
-            programs_data.append(program.dict())
-        
-        await db.programs.insert_many(programs_data)
-        logger.info("Initialized 15 programs in database")
+    # Clear existing programs to reinitialize with new names
+    await db.programs.delete_many({})
+    
+    program_names = [
+        "CSV-to-blacklist",
+        "csv-to-enduser", 
+        "csv-to-functional",
+        "csv-to-newenduser",
+        "csv-to-newfunctional",
+        "csv-to-silentuser",
+        "csv-to-swapalias",
+        "csv-to-antispoofing",
+        "csv-to-globalalias",
+        "csv-to-autoblockattachment",
+        "csv-to-block-by-body-content",
+        "csv-to-blocklist",
+        "Archive tools",
+        "autoblockHeader",
+        "autorelay"
+    ]
+    
+    programs_data = []
+    for i, name in enumerate(program_names, 1):
+        program = Program(
+            name=name,
+            title=f"Program {i}",
+            description="This is a testing program and soon it will be a program to execute to complete a specific functionality. To be determined soon...."
+        )
+        programs_data.append(program.dict())
+    
+    await db.programs.insert_many(programs_data)
+    logger.info(f"Initialized {len(programs_data)} programs in database with new names")
 
 # API Routes
 @api_router.get("/")
